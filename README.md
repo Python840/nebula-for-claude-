@@ -26,7 +26,7 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 
 ### Option A — Download zip (easiest)
 
-1. Download **[nebula-for-claude-v1.0.0.zip](https://github.com/Python840/nebula-for-claude-/releases/latest)** from the Releases page
+1. Download **[nebula-for-claude-v1.0.0.zip](https://github.com/Python840/nebula-for-claude-/raw/main/nebula-for-claude-v1.0.0.zip)**
 2. Extract the zip anywhere
 3. Open Chrome → `chrome://extensions`
 4. Enable **Developer mode** (top right)
