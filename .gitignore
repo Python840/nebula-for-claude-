@@ -8,6 +8,5 @@ desktop.ini
 .idea/
 *.swp
 
-# Build artifacts (none yet, but for future)
+# Build artifacts
 dist/
-*.zip

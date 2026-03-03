@@ -22,14 +22,23 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 
 ---
 
-## Install (unpacked)
+## Install
 
-1. [Download or clone](https://github.com/your-username/nebula-for-claude) this repo
-2. Open Chrome and go to `chrome://extensions`
-3. Enable **Developer mode** (top right)
-4. Click **Load unpacked** and select the `nebula-for-claude` folder
-5. Pin the extension from the puzzle icon
-6. Open [claude.ai](https://claude.ai) and enjoy
+### Option A — Download zip (easiest)
+
+1. Download **[nebula-for-claude-v1.0.0.zip](https://github.com/Python840/nebula-for-claude-/releases/latest)** from the Releases page
+2. Extract the zip anywhere
+3. Open Chrome → `chrome://extensions`
+4. Enable **Developer mode** (top right)
+5. Click **Load unpacked** → select the extracted folder
+6. Pin from the puzzle icon → open [claude.ai](https://claude.ai)
+
+### Option B — Clone
+
+```bash
+git clone https://github.com/Python840/nebula-for-claude-.git
+```
+Then follow steps 3–6 above.
 
 Chrome Web Store release planned.
 
