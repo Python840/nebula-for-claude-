@@ -1,0 +1,316 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Nebula for Claude — styles.css
+   Deep-space ambient atmosphere for claude.ai
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── CSS custom properties (defaults, overridden by content.js) ── */
+:root {
+  --nebula-base:       #020817;
+  --nebula-grad1:      0, 180, 255;
+  --nebula-grad2:      80, 30, 180;
+  --nebula-grad3:      0, 80, 200;
+  --nebula-accent:     #06b6d4;
+  --nebula-glow:       0, 200, 255;
+  --nebula-panel-op:   0.75;
+  --nebula-blur:       20px;
+  --nebula-anim-speed: 28s;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   BACKGROUND CONTAINER
+   ══════════════════════════════════════════════════════════════════ */
+#nebula-bg {
+  position:       fixed;
+  inset:          0;
+  z-index:        -999;
+  pointer-events: none;
+  overflow:       hidden;
+  background:     var(--nebula-base);
+}
+
+/* ── Animated gradient nebula ─────────────────────────────────── */
+.nebula-gradient {
+  position:   absolute;
+  inset:      -60%;   /* oversized so the animation doesn't show edges */
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 55%,
+      rgba(var(--nebula-grad1), 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 80% 25%,
+      rgba(var(--nebula-grad2), 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 55% 80%,
+      rgba(var(--nebula-grad3), 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 90% 70%,
+      rgba(var(--nebula-grad1), 0.08) 0%, transparent 50%);
+  animation:  nebulaDrift var(--nebula-anim-speed) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes nebulaDrift {
+  0%   { transform: translate(0, 0)       scale(1);    }
+  25%  { transform: translate(-2%, 1.5%)  scale(1.02); }
+  50%  { transform: translate(1.5%, -2%)  scale(0.99); }
+  75%  { transform: translate(-1%, 2%)    scale(1.01); }
+  100% { transform: translate(2%, -1%)    scale(1.02); }
+}
+
+/* ── Star layers (box-shadows injected by content.js) ─────────── */
+.nebula-stars-sm,
+.nebula-stars-lg {
+  position:   absolute;
+  top:        0;
+  left:       0;
+  width:      1px;
+  height:     1px;
+  opacity:    0;
+  transition: opacity 1s ease;
+}
+
+.nebula-stars-on .nebula-stars-sm,
+.nebula-stars-on .nebula-stars-lg {
+  opacity: 1;
+}
+
+.nebula-stars-sm {
+  animation: starTwinkle 8s ease-in-out infinite alternate;
+}
+.nebula-stars-lg {
+  animation: starTwinkle 5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes starTwinkle {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1;   }
+  100% { opacity: 0.7; }
+}
+
+/* ── Optional grid overlay ────────────────────────────────────── */
+.nebula-grid {
+  position:   absolute;
+  inset:      0;
+  opacity:    0;
+  transition: opacity 0.6s ease;
+  background-image:
+    linear-gradient(rgba(var(--nebula-grad1), 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--nebula-grad1), 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.nebula-grid-on .nebula-grid { opacity: 1; }
+
+/* ── Vignette: darkens edges for depth ────────────────────────── */
+.nebula-vignette {
+  position:   absolute;
+  inset:      0;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   CLAUDE.AI TRANSPARENCY LAYER
+   Claude.ai (Next.js) — multiple selector strategies for resilience.
+   We make structural containers transparent and apply glassmorphism.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Strategy 1: Root shell */
+.nebula-active html,
+.nebula-active body,
+.nebula-active #__next,
+.nebula-active #root {
+  background: transparent !important;
+}
+
+/* Strategy 2: Top-level layout wrappers */
+.nebula-active > div,
+.nebula-active body > div:first-child {
+  background: transparent !important;
+}
+
+/* Strategy 3: Main content and full-height flex containers */
+.nebula-active main,
+.nebula-active [class*="main-"],
+.nebula-active [class*="-main"] {
+  background: transparent !important;
+}
+
+/* ── Sidebar / navigation panel ──────────────────────────────── */
+.nebula-active nav,
+.nebula-active aside,
+.nebula-active [class*="sidebar"],
+.nebula-active [class*="Sidebar"],
+.nebula-active [data-testid*="sidebar"],
+.nebula-active [aria-label*="sidebar"],
+.nebula-active [aria-label*="Sidebar"] {
+  background: rgba(2, 8, 23, calc(var(--nebula-panel-op) * 1.1)) !important;
+  backdrop-filter: blur(var(--nebula-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--nebula-blur)) !important;
+  border-right: 1px solid rgba(var(--nebula-grad1), 0.08) !important;
+}
+
+/* ── Chat content area ───────────────────────────────────────── */
+.nebula-active [class*="conversation"],
+.nebula-active [class*="Conversation"],
+.nebula-active [class*="thread"],
+.nebula-active [class*="Thread"],
+.nebula-active [class*="chat-"],
+.nebula-active [class*="-chat"],
+.nebula-active [data-testid*="conversation"] {
+  background: transparent !important;
+}
+
+/* ── Message bubbles / cards ─────────────────────────────────── */
+.nebula-active [class*="message"],
+.nebula-active [class*="Message"] {
+  background: rgba(10, 20, 45, calc(var(--nebula-panel-op) * 0.6)) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(var(--nebula-grad1), 0.06) !important;
+}
+
+/* ── Input / composer area ───────────────────────────────────── */
+.nebula-active [class*="composer"],
+.nebula-active [class*="Composer"],
+.nebula-active [class*="input-bar"],
+.nebula-active [class*="InputBar"],
+.nebula-active [data-testid*="composer"],
+.nebula-active textarea,
+.nebula-active [contenteditable="true"] {
+  background: rgba(5, 15, 35, calc(var(--nebula-panel-op) * 0.9)) !important;
+  backdrop-filter: blur(var(--nebula-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--nebula-blur)) !important;
+  border-color: rgba(var(--nebula-grad1), 0.15) !important;
+}
+
+/* ── Bottom input wrapper / floating bar ─────────────────────── */
+.nebula-active [class*="bottom"],
+.nebula-active [class*="Bottom"],
+.nebula-active [class*="footer"],
+.nebula-active [class*="Footer"] {
+  background: rgba(2, 8, 23, calc(var(--nebula-panel-op) * 0.95)) !important;
+  backdrop-filter: blur(var(--nebula-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--nebula-blur)) !important;
+  border-top: 1px solid rgba(var(--nebula-grad1), 0.07) !important;
+}
+
+/* ── Modals / dialogs ─────────────────────────────────────────── */
+.nebula-active dialog,
+.nebula-active [role="dialog"],
+.nebula-active [class*="modal"],
+.nebula-active [class*="Modal"] {
+  background: rgba(5, 10, 30, 0.92) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  border: 1px solid rgba(var(--nebula-grad1), 0.12) !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(var(--nebula-grad1), 0.06) !important;
+}
+
+/* ── Dropdown menus ───────────────────────────────────────────── */
+.nebula-active [role="menu"],
+.nebula-active [class*="dropdown"],
+.nebula-active [class*="Dropdown"],
+.nebula-active [class*="popover"],
+.nebula-active [class*="Popover"] {
+  background: rgba(8, 14, 38, 0.94) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(var(--nebula-grad1), 0.10) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Header / top bar ─────────────────────────────────────────── */
+.nebula-active header,
+.nebula-active [class*="header"],
+.nebula-active [class*="Header"],
+.nebula-active [class*="topbar"],
+.nebula-active [class*="TopBar"],
+.nebula-active [class*="navbar"],
+.nebula-active [class*="NavBar"] {
+  background: rgba(2, 8, 23, calc(var(--nebula-panel-op) * 0.95)) !important;
+  backdrop-filter: blur(var(--nebula-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--nebula-blur)) !important;
+  border-bottom: 1px solid rgba(var(--nebula-grad1), 0.07) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   GLOW ACCENTS
+   Subtle neon glow on interactive elements when glowAccents is on
+   ══════════════════════════════════════════════════════════════════ */
+.nebula-glow-on button:focus-visible,
+.nebula-glow-on a:focus-visible {
+  outline: 1px solid rgba(var(--nebula-glow), 0.6) !important;
+  box-shadow: 0 0 12px rgba(var(--nebula-glow), 0.25) !important;
+}
+
+/* Send / primary action buttons */
+.nebula-glow-on [type="submit"],
+.nebula-glow-on [class*="send"],
+.nebula-glow-on [class*="Send"],
+.nebula-glow-on [data-testid*="send"] {
+  box-shadow: 0 0 14px rgba(var(--nebula-glow), 0.3) !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+.nebula-glow-on [type="submit"]:hover,
+.nebula-glow-on [class*="send"]:hover,
+.nebula-glow-on [class*="Send"]:hover {
+  box-shadow: 0 0 22px rgba(var(--nebula-glow), 0.5) !important;
+}
+
+/* Scrollbar */
+.nebula-active ::-webkit-scrollbar {
+  width: 5px;
+  background: transparent;
+}
+.nebula-active ::-webkit-scrollbar-thumb {
+  background: rgba(var(--nebula-grad1), 0.25);
+  border-radius: 4px;
+}
+.nebula-active ::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--nebula-grad1), 0.45);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   FOCUS MODE
+   Hides non-essential chrome — sidebar nav items, misc buttons
+   ══════════════════════════════════════════════════════════════════ */
+.nebula-focus [class*="recent"],
+.nebula-focus [class*="Recent"],
+.nebula-focus [class*="history"],
+.nebula-focus [class*="History"],
+.nebula-focus [aria-label*="New chat"],
+.nebula-focus [aria-label*="new chat"],
+.nebula-focus nav ul,
+.nebula-focus [class*="sidebar-list"],
+.nebula-focus [class*="SidebarList"] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nebula-focus nav:hover [class*="recent"],
+.nebula-focus nav:hover [class*="history"],
+.nebula-focus nav:hover ul {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SUBTLE SCAN-LINE OVERLAY (2026 HUD feel)
+   Applied as a ::after on #nebula-bg, very faint
+   ══════════════════════════════════════════════════════════════════ */
+#nebula-bg::after {
+  content:    '';
+  position:   absolute;
+  inset:      0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.015) 3px,
+    rgba(0, 0, 0, 0.015) 4px
+  );
+  pointer-events: none;
+}

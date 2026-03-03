@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-nebula-theme="void">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nebula for Claude</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.9"/>
+        <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="4"  cy="8"  r="0.8" fill="currentColor" opacity="0.7"/>
+        <circle cx="19" cy="6"  r="0.5" fill="currentColor" opacity="0.5"/>
+        <circle cx="20" cy="17" r="0.7" fill="currentColor" opacity="0.6"/>
+        <circle cx="6"  cy="18" r="0.4" fill="currentColor" opacity="0.4"/>
+        <circle cx="15" cy="3"  r="0.5" fill="currentColor" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-name">NEBULA</span>
+        <span class="logo-sub">for Claude</span>
+      </div>
+    </div>
+    <label class="power-toggle" title="Enable / disable Nebula">
+      <input type="checkbox" id="enabled">
+      <span class="power-track">
+        <span class="power-thumb"></span>
+      </span>
+    </label>
+  </div>
+
+  <div class="panel" id="main-panel">
+
+    <!-- Theme presets -->
+    <section class="section">
+      <div class="section-label">THEME</div>
+      <div class="theme-grid">
+        <button class="theme-swatch" data-theme="void"   title="Void">
+          <span class="swatch-preview void-preview"></span>
+          <span class="swatch-name">Void</span>
+        </button>
+        <button class="theme-swatch" data-theme="nebula" title="Nebula">
+          <span class="swatch-preview nebula-preview"></span>
+          <span class="swatch-name">Nebula</span>
+        </button>
+        <button class="theme-swatch" data-theme="neon"   title="Neon">
+          <span class="swatch-preview neon-preview"></span>
+          <span class="swatch-name">Neon</span>
+        </button>
+        <button class="theme-swatch" data-theme="mono"   title="Mono">
+          <span class="swatch-preview mono-preview"></span>
+          <span class="swatch-name">Mono</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Sliders -->
+    <section class="section">
+      <div class="section-label">DEPTH</div>
+
+      <div class="slider-row">
+        <label class="slider-label" for="panelOpacity">Panel opacity</label>
+        <div class="slider-track-wrap">
+          <input type="range" id="panelOpacity" min="20" max="98" step="1">
+          <span class="slider-val" id="panelOpacityVal">75</span>
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <label class="slider-label" for="blur">Backdrop blur</label>
+        <div class="slider-track-wrap">
+          <input type="range" id="blur" min="0" max="48" step="2">
+          <span class="slider-val" id="blurVal">20</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toggles -->
+    <section class="section">
+      <div class="section-label">EFFECTS</div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Stars</span>
+        <label class="switch">
+          <input type="checkbox" id="stars">
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Grid lines</span>
+        <label class="switch">
+          <input type="checkbox" id="gridLines">
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Glow accents</span>
+        <label class="switch">
+          <input type="checkbox" id="glowAccents">
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Focus mode</span>
+        <label class="switch">
+          <input type="checkbox" id="focusMode">
+          <span class="track"><span class="thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Animation speed -->
+    <section class="section">
+      <div class="section-label">ANIMATION</div>
+      <div class="seg-control" id="animSpeed">
+        <button class="seg-btn" data-val="slow">Slow</button>
+        <button class="seg-btn" data-val="medium">Medium</button>
+        <button class="seg-btn" data-val="off">Off</button>
+      </div>
+    </section>
+
+  </div><!-- /panel -->
+
+  <div class="footer">
+    <span class="footer-text">Nebula v1.0 &nbsp;·&nbsp; claude.ai</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
