@@ -2,17 +2,17 @@
 <html lang="en" data-nebula-theme="void">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nebula for Claude</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
 
+  <!-- ── Header ───────────────────────────────────────────────── -->
   <div class="header">
     <div class="logo">
-      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.9"/>
-        <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3"  fill="currentColor" opacity="0.9"/>
+        <circle cx="12" cy="12" r="6"  stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="0.3" opacity="0.15"/>
         <circle cx="4"  cy="8"  r="0.8" fill="currentColor" opacity="0.7"/>
         <circle cx="19" cy="6"  r="0.5" fill="currentColor" opacity="0.5"/>
@@ -22,20 +22,45 @@
       </svg>
       <div class="logo-text">
         <span class="logo-name">NEBULA</span>
-        <span class="logo-sub">for Claude</span>
+        <span class="logo-sub">for Claude · v1.1</span>
       </div>
     </div>
-    <label class="power-toggle" title="Enable / disable Nebula">
+    <label class="power-toggle" title="Enable / disable (Alt+Shift+N)">
       <input type="checkbox" id="enabled">
-      <span class="power-track">
-        <span class="power-thumb"></span>
-      </span>
+      <span class="power-track"><span class="power-thumb"></span></span>
     </label>
   </div>
 
   <div class="panel" id="main-panel">
 
-    <!-- Theme presets -->
+    <!-- ── Background ───────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">BACKGROUND</div>
+      <input type="text" id="bgUrl" class="text-input" placeholder="Paste image or video URL…" autocomplete="off" spellcheck="false">
+      <div class="bg-actions">
+        <label class="upload-btn" for="bgFile">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12">
+            <path d="M8 1a.5.5 0 0 1 .5.5v8.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V1.5A.5.5 0 0 1 8 1zM1 14.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+          Upload file
+        </label>
+        <input type="file" id="bgFile" accept="image/*,video/mp4,video/webm,video/ogg" style="display:none">
+        <button id="clearBg" class="clear-btn">Clear</button>
+      </div>
+      <div class="slider-row">
+        <label class="slider-label" for="bgBlur">BG blur</label>
+        <div class="slider-track-wrap">
+          <input type="range" id="bgBlur" min="0" max="100" step="5">
+          <span class="slider-val" id="bgBlurVal">60px</span>
+        </div>
+      </div>
+      <div class="seg-control" id="bgScale">
+        <button class="seg-btn" data-val="cover">Cover</button>
+        <button class="seg-btn" data-val="contain">Contain</button>
+      </div>
+    </section>
+
+    <!-- ── Theme ─────────────────────────────────────────────── -->
     <section class="section">
       <div class="section-label">THEME</div>
       <div class="theme-grid">
@@ -58,65 +83,71 @@
       </div>
     </section>
 
-    <!-- Sliders -->
+    <!-- ── Depth (per-element opacity) ───────────────────────── -->
     <section class="section">
       <div class="section-label">DEPTH</div>
 
       <div class="slider-row">
-        <label class="slider-label" for="panelOpacity">Panel opacity</label>
+        <label class="slider-label" for="opacitySidebar">Sidebar</label>
         <div class="slider-track-wrap">
-          <input type="range" id="panelOpacity" min="20" max="98" step="1">
-          <span class="slider-val" id="panelOpacityVal">75</span>
+          <input type="range" id="opacitySidebar" min="0" max="100" step="5">
+          <span class="slider-val" id="opacitySidebarVal">75</span>
         </div>
       </div>
-
       <div class="slider-row">
-        <label class="slider-label" for="blur">Backdrop blur</label>
+        <label class="slider-label" for="opacityChat">Chat area</label>
+        <div class="slider-track-wrap">
+          <input type="range" id="opacityChat" min="0" max="100" step="5">
+          <span class="slider-val" id="opacityChatVal">40</span>
+        </div>
+      </div>
+      <div class="slider-row">
+        <label class="slider-label" for="opacityInput">Input bar</label>
+        <div class="slider-track-wrap">
+          <input type="range" id="opacityInput" min="0" max="100" step="5">
+          <span class="slider-val" id="opacityInputVal">85</span>
+        </div>
+      </div>
+      <div class="slider-row">
+        <label class="slider-label" for="blur">Panel blur</label>
         <div class="slider-track-wrap">
           <input type="range" id="blur" min="0" max="48" step="2">
-          <span class="slider-val" id="blurVal">20</span>
+          <span class="slider-val" id="blurVal">20px</span>
         </div>
       </div>
     </section>
 
-    <!-- Toggles -->
+    <!-- ── Effects ───────────────────────────────────────────── -->
     <section class="section">
       <div class="section-label">EFFECTS</div>
 
       <div class="toggle-row">
         <span class="toggle-label">Stars</span>
-        <label class="switch">
-          <input type="checkbox" id="stars">
-          <span class="track"><span class="thumb"></span></span>
-        </label>
+        <label class="switch"><input type="checkbox" id="stars"><span class="track"><span class="thumb"></span></span></label>
       </div>
-
+      <div class="toggle-row">
+        <span class="toggle-label">Particles</span>
+        <label class="switch"><input type="checkbox" id="particles"><span class="track"><span class="thumb"></span></span></label>
+      </div>
       <div class="toggle-row">
         <span class="toggle-label">Grid lines</span>
-        <label class="switch">
-          <input type="checkbox" id="gridLines">
-          <span class="track"><span class="thumb"></span></span>
-        </label>
+        <label class="switch"><input type="checkbox" id="gridLines"><span class="track"><span class="thumb"></span></span></label>
       </div>
-
       <div class="toggle-row">
         <span class="toggle-label">Glow accents</span>
-        <label class="switch">
-          <input type="checkbox" id="glowAccents">
-          <span class="track"><span class="thumb"></span></span>
-        </label>
+        <label class="switch"><input type="checkbox" id="glowAccents"><span class="track"><span class="thumb"></span></span></label>
       </div>
-
       <div class="toggle-row">
         <span class="toggle-label">Focus mode</span>
-        <label class="switch">
-          <input type="checkbox" id="focusMode">
-          <span class="track"><span class="thumb"></span></span>
-        </label>
+        <label class="switch"><input type="checkbox" id="focusMode"><span class="track"><span class="thumb"></span></span></label>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Compact mode</span>
+        <label class="switch"><input type="checkbox" id="compactMode"><span class="track"><span class="thumb"></span></span></label>
       </div>
     </section>
 
-    <!-- Animation speed -->
+    <!-- ── Animation ─────────────────────────────────────────── -->
     <section class="section">
       <div class="section-label">ANIMATION</div>
       <div class="seg-control" id="animSpeed">
@@ -126,10 +157,16 @@
       </div>
     </section>
 
+    <!-- ── Advanced ──────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label">ADVANCED</div>
+      <textarea id="customCss" class="css-input" placeholder="Custom CSS injected into claude.ai…" spellcheck="false" rows="5"></textarea>
+    </section>
+
   </div><!-- /panel -->
 
   <div class="footer">
-    <span class="footer-text">Nebula v1.0 &nbsp;·&nbsp; claude.ai</span>
+    <span class="footer-text">Alt+Shift+N to toggle &nbsp;·&nbsp; claude.ai</span>
   </div>
 
   <script src="popup.js"></script>

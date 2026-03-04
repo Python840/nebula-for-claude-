@@ -9,13 +9,19 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 ## Features
 
 - **Animated nebula background** — slow-drifting gradient layers, no external images
+- **Custom background** — paste any image/video URL or upload a local file (up to 15MB)
 - **Star field** — 480 deterministic stars (stable across reloads, no flickering)
+- **Particle system** — floating ambient embers, pure CSS, GPU-accelerated
 - **Glassmorphism panels** — sidebar, header, input, modals all go frosted-glass
+- **Per-element opacity** — independent depth control for sidebar, chat area, and input bar
 - **4 themes** — Void (cyan), Nebula (purple), Neon (vivid cyan), Mono (slate)
+- **Code block styling** — syntax-highlighted code blocks themed to match your active theme
 - **Focus mode** — hides conversation history until you hover the sidebar
+- **Compact mode** — tighter message spacing for more content density
 - **Glow accents** — subtle neon glow on interactive elements
 - **Grid lines** — optional HUD overlay
-- **Panel opacity + blur sliders** — dial in exactly how much you want
+- **Custom CSS** — inject your own CSS directly into claude.ai
+- **Keyboard shortcut** — `Alt+Shift+N` toggles Nebula on/off instantly
 - **Animation speed** — Slow / Medium / Off
 - **SPA-aware** — survives Next.js navigation without breaking
 - **Private** — no network calls, no analytics; settings sync via `chrome.storage.sync`
@@ -26,7 +32,7 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 
 ### Option A — Download zip (easiest)
 
-1. Download **[nebula-for-claude-v1.0.0.zip](https://github.com/Python840/nebula-for-claude-/raw/main/nebula-for-claude-v1.0.0.zip)**
+1. Download **[nebula-for-claude-v1.1.0.zip](https://github.com/Python840/nebula-for-claude-/raw/main/nebula-for-claude-v1.1.0.zip)**
 2. Extract the zip anywhere
 3. Open Chrome → `chrome://extensions`
 4. Enable **Developer mode** (top right)
