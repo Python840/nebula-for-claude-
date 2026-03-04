@@ -179,9 +179,15 @@
   // semantic roles and structure rather than class names.
   function applyGlass() {
     if (!settings.enabled || !document.body) return;
-    const blur      = `blur(${settings.blur || '20'}px)`;
-    const opSidebar = (parseInt(settings.opacitySidebar || '75') / 100).toFixed(2);
-    const opInput   = (parseInt(settings.opacityInput   || '85') / 100).toFixed(2);
+    const blurPx    = parseInt(settings.blur || '20');
+    const blur      = `blur(${blurPx}px)`;
+    const rawSidebar = parseInt(settings.opacitySidebar || '75') / 100;
+    const rawInput   = parseInt(settings.opacityInput   || '85') / 100;
+    // When panel blur is active, enforce a minimum opacity so frost is visible
+    // even over already-blurred or smooth gradient backgrounds
+    const minFrost  = blurPx > 0 ? 0.12 : 0;
+    const opSidebar = Math.max(rawSidebar, minFrost).toFixed(2);
+    const opInput   = Math.max(rawInput,   minFrost).toFixed(2);
 
     // Semantic structural elements: definitely present in any modern web app
     const sidebarEls = document.querySelectorAll(
@@ -224,14 +230,13 @@
     const inputs = document.querySelectorAll('[contenteditable="true"], textarea, [role="textbox"]');
     inputs.forEach(inp => {
       if (inp.closest('#' + BG_ID)) return;
-      // Walk up to find the containing panel (up to 5 levels)
+      // Walk up to find the outermost composer container
+      // Stop when the element gets taller than 60% of viewport (we've gone too far)
       let container = inp;
-      for (let i = 0; i < 5; i++) {
-        const p = container.parentElement;
-        if (!p || p === document.body) break;
-        const rect = p.getBoundingClientRect();
-        if (rect.width > window.innerWidth * 0.3) { container = p; break; }
-        container = p;
+      for (let el = inp.parentElement; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
+        const rect = el.getBoundingClientRect();
+        if (rect.height > window.innerHeight * 0.6) break;
+        container = el;
       }
 
       if (style === 'default') {
@@ -288,14 +293,14 @@
     html.classList.toggle('nebula-particles-on', !!settings.enabled && !!settings.particles);
     html.setAttribute('data-nebula-theme', settings.theme || 'void');
 
-    // Stars: direct JS control (more reliable than CSS class cascade)
+    // Stars: use display to defeat the starTwinkle animation (which overrides opacity)
     const bgNode = document.getElementById(BG_ID);
     if (bgNode) {
       const showStars = !!settings.enabled && !!settings.stars;
       const sm = bgNode.querySelector('.nebula-stars-sm');
       const lg = bgNode.querySelector('.nebula-stars-lg');
-      if (sm) sm.style.opacity = showStars ? '1' : '0';
-      if (lg) lg.style.opacity = showStars ? '1' : '0';
+      if (sm) sm.style.display = showStars ? 'block' : 'none';
+      if (lg) lg.style.display = showStars ? 'block' : 'none';
     }
   }
 
