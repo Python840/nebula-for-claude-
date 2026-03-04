@@ -17,6 +17,7 @@ const DEFAULTS = {
   focusMode:       false,
   compactMode:     false,
   particles:       false,
+  composerStyle:   'glass',
   customCss:       '',
   animSpeed:       'slow',
 };
@@ -71,8 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return (value) => btns.forEach(b => b.classList.toggle('active', b.dataset.val === value));
   }
 
-  const setAnimSpeed = initSegControl('animSpeed', 'animSpeed');
-  const setBgScale   = initSegControl('bgScale',   'bgScale');
+  const setAnimSpeed     = initSegControl('animSpeed',     'animSpeed');
+  const setBgScale       = initSegControl('bgScale',       'bgScale');
+  const setComposerStyle = initSegControl('composerStyle', 'composerStyle');
 
   // ── Slider helper ─────────────────────────────────────────────
   function initSlider(slider, valEl, storageKey, suffix = '') {
@@ -128,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Segmented controls
     setAnimSpeed(s.animSpeed);
     setBgScale(s.bgScale);
+    setComposerStyle(s.composerStyle);
 
     // Background URL field
     if (s.customBgUrl === '__local__') {

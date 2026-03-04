@@ -322,14 +322,24 @@
 /* ══════════════════════════════════════════════════════════════════
    COMPACT MODE
    ══════════════════════════════════════════════════════════════════ */
+.nebula-compact [data-testid*="turn"],
+.nebula-compact [data-testid*="message"],
+.nebula-compact article,
+.nebula-compact [role="article"],
 .nebula-compact [class*="message"],
-.nebula-compact [class*="Message"],
-.nebula-compact [data-testid*="message"] {
-  padding-top:    8px  !important;
-  padding-bottom: 8px  !important;
+.nebula-compact [class*="Message"] {
+  padding-top:    6px  !important;
+  padding-bottom: 6px  !important;
   margin-bottom:  4px  !important;
-  line-height:    1.45 !important;
 }
+.nebula-compact [data-testid*="turn"] p,
+.nebula-compact article p,
+.nebula-compact [role="article"] p {
+  line-height:    1.45 !important;
+  margin-bottom:  0.4em !important;
+}
+.nebula-compact main,
+.nebula-compact [role="main"],
 .nebula-compact [class*="conversation"],
 .nebula-compact [class*="thread"] {
   gap: 4px !important;

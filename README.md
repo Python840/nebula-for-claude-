@@ -20,6 +20,7 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 - **Compact mode** — tighter message spacing for more content density
 - **Glow accents** — subtle neon glow on interactive elements
 - **Grid lines** — optional HUD overlay
+- **Composer style** — Glass, Neon, or Default input area styling
 - **Custom CSS** — inject your own CSS directly into claude.ai
 - **Keyboard shortcut** — `Alt+Shift+N` toggles Nebula on/off instantly
 - **Animation speed** — Slow / Medium / Off
@@ -32,7 +33,7 @@ A deep-space ambient atmosphere for [claude.ai](https://claude.ai) — animated 
 
 ### Option A — Download zip (easiest)
 
-1. Download **[nebula-for-claude-v1.1.0.zip](https://github.com/Python840/nebula-for-claude-/raw/main/nebula-for-claude-v1.1.0.zip)**
+1. Download **[nebula-for-claude-v1.1.1.zip](https://github.com/Python840/nebula-for-claude-/raw/main/nebula-for-claude-v1.1.1.zip)**
 2. Extract the zip anywhere
 3. Open Chrome → `chrome://extensions`
 4. Enable **Developer mode** (top right)
